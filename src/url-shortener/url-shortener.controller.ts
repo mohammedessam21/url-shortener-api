@@ -2,6 +2,7 @@ import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 
 import { UrlShortenerService } from './url-shortener.service';
 import { CreateUrlShortenerDto } from './dto/create-url-shortener.dto';
+import { UrlShortenerResponse } from 'src/common/url-shortener-response';
 
 @Controller()
 export class UrlShortenerController {
@@ -13,11 +14,7 @@ export class UrlShortenerController {
   }
 
   @Get('redirect/:shortCode')
-  async resolve(@Param('shortCode') code: string):Promise<{
-    originalUrl: string;
-    accessCount: number;
-    createdAt: Date;
-    expiresAt: Date;}> 
+  async resolve(@Param('shortCode') code: string):Promise<UrlShortenerResponse> 
 {
     return await this.urlShortenerService.getOriginalUrl(code);
   }
